@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<META charset="UTF-8">
+		<TITLE>실습4</TITLE>
+	</HEAD>
+	<SCRIPT>
+		function changeMenu(menuNumber) {
+			if(menuNumber == 1) {
+				console.log("selec menu 1");
+				document.getElementById("menu1").className = "click";
+				document.getElementById("menu2").className = "noneclick";
+				document.getElementById("menu3").className = "noneclick";
+			} else if(menuNumber == 2) {
+				console.log("selec menu 2");
+				document.getElementById("menu1").className = "noneclick";
+				document.getElementById("menu2").className = "click";
+				document.getElementById("menu3").className = "noneclick";
+			} else if(menuNumber == 3) {
+				console.log("selec menu 3");
+				document.getElementById("menu1").className = "noneclick";
+				document.getElementById("menu2").className = "noneclick";
+				document.getElementById("menu3").className = "click";
+			}
+		}
+	</SCRIPT>
+	<STYLE>
+		.noneclick {
+			width: 150px;
+			height: 50px;
+			color: white;
+			background-color: gray;
+			display: inline-block;
+		}
+		.click {
+			width: 150px;
+			height: 50px;
+			color: black;
+			background-color: white;
+			display: inline-block;
+		}
+	</STYLE>
+	<BODY>
+		<div id="menu1" class="noneclick" onclick="changeMenu(1)">html</div>
+		<div id="menu2" class="click" onclick="changeMenu(2)">css</div>
+		<div id="menu3" class="noneclick" onclick="changeMenu(3)">javascript</div>
+	</BODY>
+</HTML>

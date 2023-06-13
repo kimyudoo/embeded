@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<HTML>
+	<!-- 주석 -->
+	<HEAD>
+		<META charset="UTF-8">
+		<TITLE>실습</TITLE>
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+		<SCRIPT>
+			$( function() {
+				$("#inputTextButton").click(function() {
+					var inputText = $("#inputTextBox").val();
+					console.log(inputText);
+					if(inputText == "") {
+						alert("값을 입력하세요!!");
+					} else {
+						$("#mainframe").append("<div id='maintext' class='bigfont'>" + inputText + "</div>");
+						$("#mainframe").append("<input type='button' id='redbutton' value='빨강'>");
+						$("#mainframe").append("<input type='button' id='bluebutton' value='파랑'>");
+						$("#mainframe").append("<input type='button' id='greenbutton' value='초록'>");
+						$("#redbutton").click( function() {
+							alert("빨강 색으로 변경됩니다.");
+							$("#maintext").addClass("redtext");
+						});
+						$("#bluebutton").click( function() {
+							alert("파랑 색으로 변경됩니다.");
+							$("#maintext").addClass("bluetext");
+						});
+						$("#greenbutton").click( function() {
+							alert("초록 색으로 변경됩니다.");
+							$("#maintext").addClass("greentext");
+						});
+					}
+				});
+			});
+		</SCRIPT>
+		<STYLE>
+			.bigfont {
+				font-size: 30px;
+				text-align: center;
+			}
+			.redtext {
+				color: red;
+			}
+			.bluetext {
+				color: blue;
+			}
+			.greentext {
+				color: green;
+			}
+		</STYLE>		
+	</HEAD>
+	<BODY>
+		<div id="mainframe">
+			<input type="text" id="inputTextBox">
+			<input type="button" id="inputTextButton" value="입력">
+		</div>
+	</BODY>
+</HTML>
