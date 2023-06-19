@@ -7,32 +7,46 @@
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 		<SCRIPT>
 			$( function() {
-				var textcounter = 0;
+				// 처음 실행 될 때 DB에서 값 가져오기
+				$.readMessage();
+
+				//////////////////////////
 				$("#inputTextBox").focus();
 				$("#inputTextBox").on("keyup",function(key){
 			        if(key.keyCode==13) {
 			        	var inputText = $("#inputTextBox").val();
 						if(inputText != "") {
-							$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>" + inputText + "<img id='deletebutton" + textcounter + "' value='" + textcounter + "' class='xbutton' src='x.png'></div>");
-							$("#deletebutton" + textcounter).click( function() {
-								var currentCount = $(this).attr("value");
-								console.log(currentCount);
-								$("#detailtext" + currentCount).remove();
-							});
-							$("#inputTextBox").val("");
-							$("#inputTextBox").focus();
-							textcounter++;
-
-							fetch("http://localhost:8080/hello.jsp?inputtext=" + inputText)
-							.then((response) => response.text())
-							.then((str) => new DOMParser().parseFromString(str, 'application/xml'))
-							.then((xml) => {
-								console.log(xml);
-							})
+							fetch("insert.jsp?inputtext=" + inputText)
+								.then((response) => {
+									$.readMessage();
+								});		
 						}    
 			        }
 			    });				
 			});
+			$.readMessage = function() {
+				$("#contetsbox").empty();
+				fetch("read.jsp")
+					.then((response) => response.json())
+					.then((json) =>{
+						console.log(json);
+						for (var i = 0; i < json.length; i++) {
+							var textcounter = json[i].id;
+							var inputText = json[i].text;
+							$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>" + inputText + "<img id='deletebutton" + textcounter + "' value='" + textcounter + "' class='xbutton' src='x.png'></div>");
+							$("#deletebutton" + textcounter).click( function() {
+								var currentCount = $(this).attr("value");
+								console.log(currentCount);
+								fetch("delete.jsp?num=" + currentCount)
+									.then((response) => {
+										$.readMessage();
+									});																
+							});
+							$("#inputTextBox").val("");
+							$("#inputTextBox").focus();
+						}						
+					})					
+			}
 
 		</SCRIPT>
 		<STYLE>
