@@ -23,26 +23,11 @@
 							$("#inputTextBox").focus();
 							textcounter++;
 
-							fetch("https://dapi.kakao.com/v2/search/web?query=" + inputText, {
-								method: 'GET',
-								headers: {
-									'Content-Type': 'application/json',
-									'Authorization' : 'KakaoAK 73545f902c13bd500291f79ee60d7f55'
-								}
-							})
-							.then( response => response.json() )
-							.then( json => { 
-								console.log(json);
-								inputText = json.documents[0].contents;
-								$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>" + inputText + "<img id='deletebutton" + textcounter + "' value='" + textcounter + "' class='xbutton' src='x.png'></div>");
-								$("#deletebutton" + textcounter).click( function() {
-									var currentCount = $(this).attr("value");
-									console.log(currentCount);
-									$("#detailtext" + currentCount).remove();
-								});
-								$("#inputTextBox").val("");
-								$("#inputTextBox").focus();
-								textcounter++;
+							fetch("http://localhost:8080/hello.jsp?inputtext=" + inputText)
+							.then((response) => response.text())
+							.then((str) => new DOMParser().parseFromString(str, 'application/xml'))
+							.then((xml) => {
+								console.log(xml);
 							})
 						}    
 			        }
@@ -82,7 +67,7 @@
 	</HEAD>
 	<BODY>
 		<div id="mainframe" class="mainstyle">
-			<div id="titlebox" class="titleboxstyle">기사 등록하기</div>
+			<div id="titlebox" class="titleboxstyle">KOPO 채팅</div>
 			<div id="contetsbox" class="contentsboxstyle"></div>
 			<div id="inputbox">
 				<input type="text" id="inputTextBox" class="inputboxstyle">

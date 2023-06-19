@@ -19,6 +19,12 @@
         conn=DriverManager.getConnection(url,id,pw);
         // 커넥션이 제대로 연결되면 수행된다.
         out.println("제대로 연결되었습니다.");
+        // insert 수행
+        String inputStr = request.getParameter("inputtext");
+        PreparedStatement pstmt = null;
+        pstmt = conn.prepareStatement("INSERT INTO chatting VALUES ( 0, ? ,now() );");
+        pstmt.setString(1, inputStr);
+        pstmt.executeUpdate();
     // 예외가 발생하면 예외 상황을 처리한다.
     }catch(Exception e){
        ByteArrayOutputStream bs = new ByteArrayOutputStream();
