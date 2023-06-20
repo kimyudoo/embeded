@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<html>
-	<HEAD>
-		<META charset="UTF-8">
-	</HEAD>
 <%@ page import = "java.sql.*" %>
 <%@ page import = "java.io.*" %>
+<%@ page import="java.util.*,java.text.*" %>
+<%@ page import="org.json.simple.*"%>
+<%@ page import="java.util.ArrayList"%>
 <%
     // null로 초기화 한다.
     Connection conn = null;
@@ -17,8 +16,6 @@
         Class.forName("com.mysql.jdbc.Driver");
         // DriverManager 객체로부터 Connection 객체를 얻어온다.
         conn=DriverManager.getConnection(url,id,pw);
-        // 커넥션이 제대로 연결되면 수행된다.
-        out.println("제대로 연결되었습니다.");
         // read 수행
         Statement stmt = null;
         ResultSet rs = null;
@@ -28,12 +25,19 @@
         String resultId = null;
         String resultText = null;
         String resultDate = null;
+        JSONArray list = new JSONArray(); // Json배열 생성
         while(rs.next() == true) {
+            JSONObject jobj = new JSONObject();
             resultId = rs.getString("id");
             resultText = rs.getString("text");
             resultDate = rs.getString("date");
-            out.println(resultId + ", " + resultText + ", " + resultDate);
+            jobj.put("id", resultId);
+            jobj.put("text", resultText);
+            jobj.put("date", resultDate);
+
+            list.add(jobj); // Json배열에 Json객체추가
         }
+        out.print(list.toJSONString());
     // 예외가 발생하면 예외 상황을 처리한다.
     }catch(Exception e){
        ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -43,4 +47,3 @@
        out.println("에러 " + traceStr);
     }
 %>
-</html>
