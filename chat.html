@@ -12,6 +12,9 @@
 				lastID = 0;
 				$.readMessage();
 
+				setInterval(function() {
+					$.readMessage();
+				}, 1000);
 				//////////////////////////
 				$("#inputTextBox").focus();
 				$("#inputTextBox").on("keyup",function(key){
