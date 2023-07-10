@@ -8,6 +8,11 @@
     // null로 초기화 한다.
     Connection conn = null;
     try{
+        // get값 받기
+        String lastid = request.getParameter("lastid");
+        if(lastid == null) {
+            lastid = "0";
+        }
         // 사용하려는 데이터베이스명을 포함한 URL 기술
         String url = "jdbc:mysql://localhost:3306/madang";
         String id = "testuser2";       // 사용자계정
@@ -20,7 +25,7 @@
         Statement stmt = null;
         ResultSet rs = null;
         stmt = conn.createStatement();
-        String sql = "SELECT * FROM chatting;";
+        String sql = "SELECT * FROM chatting WHERE id > " + lastid;
         rs = stmt.executeQuery(sql);
         String resultId = null;
         String resultText = null;
