@@ -6,8 +6,10 @@
 		<TITLE>하이하이</TITLE>
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 		<SCRIPT>
+			var lastID;
 			$( function() {
 				// 처음 실행 될 때 DB에서 값 가져오기
+				lastID = 0;
 				$.readMessage();
 
 				//////////////////////////
@@ -25,20 +27,22 @@
 			    });				
 			});
 			$.readMessage = function() {
-				$("#contetsbox").empty();
-				fetch("read.jsp")
+				// $("#contetsbox").empty();
+				fetch("read.jsp?lastid=" + lastID)
 					.then((response) => response.json())
 					.then((json) =>{
 						console.log(json);
 						for (var i = 0; i < json.length; i++) {
 							var textcounter = json[i].id;
 							var inputText = json[i].text;
+							lastID = textcounter;
 							$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>" + inputText + "<img id='deletebutton" + textcounter + "' value='" + textcounter + "' class='xbutton' src='x.png'></div>");
 							$("#deletebutton" + textcounter).click( function() {
 								var currentCount = $(this).attr("value");
 								console.log(currentCount);
 								fetch("delete.jsp?num=" + currentCount)
 									.then((response) => {
+										// console.log(response);
 										$.readMessage();
 									});																
 							});
