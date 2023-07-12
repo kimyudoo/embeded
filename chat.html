@@ -12,9 +12,23 @@
 				lastID = 0;
 				$.readMessage();
 
-				setInterval(function() {
-					$.readMessage();
-				}, 1000);
+				url = "ws://192.168.22.10:9000";
+        		w = new WebSocket(url);
+
+        		w.onopen = function() {
+		            console.log("open");
+		        }     
+		        w.onmessage = function(e) {
+		            console.log(e.data); 
+		            if(e.data == "add") {
+		            	$.readMessage();	
+		            } else if(e.data == "del") {
+		            	lastID = 0;
+						$("#contetsbox").empty();
+						$.readMessage();
+		            }
+		            
+		        }
 				//////////////////////////
 				$("#inputTextBox").focus();
 				$("#inputTextBox").on("keyup",function(key){
@@ -22,8 +36,8 @@
 			        	var inputText = $("#inputTextBox").val();
 						if(inputText != "") {
 							fetch("insert.jsp?inputtext=" + inputText)
-								.then((response) => {
-									$.readMessage();
+								.then((response) => {									
+									w.send("add");
 								});		
 						}    
 			        }
@@ -46,11 +60,12 @@
 								fetch("delete.jsp?num=" + currentCount)
 									.then((response) => {
 										// console.log(response);
-										$.readMessage();
+										w.send("del");
 									});																
 							});
 							$("#inputTextBox").val("");
 							$("#inputTextBox").focus();
+							$(document).scrollTop($(document).height());
 						}						
 					})					
 			}
