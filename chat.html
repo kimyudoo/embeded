@@ -22,10 +22,8 @@
 		            console.log(e.data); 
 		            if(e.data == "add") {
 		            	$.readMessage();	
-		            } else if(e.data == "del") {
-		            	lastID = 0;
-						$("#contetsbox").empty();
-						$.readMessage();
+		            } else {
+		            	$("#detailtext" + e.data).remove();
 		            }
 		            
 		        }
@@ -60,7 +58,7 @@
 								fetch("delete.jsp?num=" + currentCount)
 									.then((response) => {
 										// console.log(response);
-										w.send("del");
+										w.send(currentCount);
 									});																
 							});
 							$("#inputTextBox").val("");
