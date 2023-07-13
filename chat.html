@@ -60,7 +60,7 @@
 							lastID = textcounter;
 							if(inputUserID == userID) {
 								// 내 ID일 경우
-								$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>" + inputText + "<img id='deletebutton" + textcounter + "' value='" + textcounter + "' class='xbutton' src='x.png'></div>");
+								$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='mydetailtextstyle'>" + inputText + "<img id='deletebutton" + textcounter + "' value='" + textcounter + "' class='xbutton' src='x.png'></div>");
 								$("#deletebutton" + textcounter).click( function() {
 									var currentCount = $(this).attr("value");
 									console.log(currentCount);
@@ -72,7 +72,7 @@
 								});
 							} else {
 								// 내 ID가 아닐 경우
-								$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>" + inputText + "</div>");
+								$("#contetsbox").append("<div id='detailtext" + textcounter + "' class='detailtextstyle'>(" + inputUserID + ")<br>" + inputText + "</div>");
 							}
 							
 							$("#inputTextBox").val("");
@@ -100,8 +100,15 @@
 				width: 500px;
 			}
 			.detailtextstyle {
-				width: 90%;
+				width: 350px;
 				margin-left: 5%;
+				margin-right: 5%;
+				margin-bottom: 10px;
+				background-color: white;
+			}
+			.mydetailtextstyle {
+				width: 350px;
+				margin-left: 20%;
 				margin-right: 5%;
 				margin-bottom: 10px;
 				background-color: white;
