@@ -30,15 +30,18 @@
         String resultId = null;
         String resultText = null;
         String resultDate = null;
+        String resultUserID = null;
         JSONArray list = new JSONArray(); // Json배열 생성
         while(rs.next() == true) {
             JSONObject jobj = new JSONObject();
             resultId = rs.getString("id");
             resultText = rs.getString("text");
             resultDate = rs.getString("date");
+            resultUserID = rs.getString("userid");
             jobj.put("id", resultId);
             jobj.put("text", resultText);
             jobj.put("date", resultDate);
+             jobj.put("userid", resultUserID);
 
             list.add(jobj); // Json배열에 Json객체추가
         }

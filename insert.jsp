@@ -21,9 +21,11 @@
         out.println("제대로 연결되었습니다.");
         // insert 수행
         String inputStr = request.getParameter("inputtext");
+        String inputUser = request.getParameter("userid");
         PreparedStatement pstmt = null;
-        pstmt = conn.prepareStatement("INSERT INTO chatting VALUES ( 0, ? ,now() );");
+        pstmt = conn.prepareStatement("INSERT INTO chatting VALUES ( 0, ? ,now(), ? );");
         pstmt.setString(1, inputStr);
+        pstmt.setString(2, inputUser);
         pstmt.executeUpdate();
     // 예외가 발생하면 예외 상황을 처리한다.
     }catch(Exception e){
